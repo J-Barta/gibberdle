@@ -12,19 +12,14 @@ import { ENABLE_ARCHIVED_GAMES } from '../constants/settings'
 import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '../constants/strings'
 import { getToday } from './dateutils'
 import { getGuessStatuses } from './statuses'
-import { VALID_GUESSES } from '../constants/validGuesses'
-import { WORDS } from '../constants/wordlist'
 
-// 1 January 2022 Game Epoch
-export const firstGameDate = new Date(2023, 8, 1)
+
+// 1 August 2023 Game Epoch
+export const firstGameDate = new Date(2023, 7, 1)
 export const periodInDays = 1
 
 export const isWordInWordList = (word: string) => {
-  return (
-    solution === word ||
-    WORDS.includes(localeAwareLowerCase(word)) ||
-    VALID_GUESSES.includes(localeAwareLowerCase(word))
-  )
+  return true
 }
 
 export const isWinningWord = (word: string) => {

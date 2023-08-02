@@ -43,16 +43,19 @@ import {
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
-  findFirstUnusedReveal,
+  // findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
   isWinningWord,
-  isWordInWordList,
+  isWordInWordList, localeAwareLowerCase,
   setGameDate,
   solution,
   solutionGameDate,
   unicodeLength,
 } from './lib/words'
+
+import { VALID_GUESSES } from './constants/validGuesses'
+import { WORDS } from './constants/wordlist'
 
 function App() {
   const isLatestGame = getIsLatestGame()
@@ -225,10 +228,16 @@ function App() {
 
     // enforce hard mode - all guesses must contain all previously revealed letters
     if (isHardMode) {
-      const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
-      if (firstMissingReveal) {
+      // const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
+
+      const validWord =
+        solution === currentGuess ||
+        WORDS.includes(localeAwareLowerCase(currentGuess)) ||
+        VALID_GUESSES.includes(localeAwareLowerCase(currentGuess))
+
+      if (validWord) {
         setCurrentRowClass('jiggle')
-        return showErrorAlert(firstMissingReveal, {
+        return showErrorAlert("Not a valid guess!", {
           onClose: clearCurrentRowClass,
         })
       }
