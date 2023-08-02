@@ -10,17 +10,18 @@ import queryString from 'query-string'
 
 import { ENABLE_ARCHIVED_GAMES } from '../constants/settings'
 import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '../constants/strings'
-import { VALID_GUESSES } from '../constants/validGuesses'
-import { WORDS } from '../constants/wordlist'
 import { getToday } from './dateutils'
 import { getGuessStatuses } from './statuses'
+import { VALID_GUESSES } from '../constants/validGuesses'
+import { WORDS } from '../constants/wordlist'
 
 // 1 January 2022 Game Epoch
-export const firstGameDate = new Date(2022, 0)
+export const firstGameDate = new Date(2023, 8, 1)
 export const periodInDays = 1
 
 export const isWordInWordList = (word: string) => {
   return (
+    solution === word ||
     WORDS.includes(localeAwareLowerCase(word)) ||
     VALID_GUESSES.includes(localeAwareLowerCase(word))
   )
@@ -123,7 +124,46 @@ export const getWordOfDay = (index: number) => {
     throw new Error('Invalid index')
   }
 
-  return localeAwareUpperCase(WORDS[index % WORDS.length])
+  let rand = require('random-seed').create(index); // create a generator
+
+  let num = Math.floor(rand.random() * 11881376)
+
+  let digits = convertBase(num)
+
+  let word = wordFromDigits(digits)
+
+  return localeAwareUpperCase(word)
+}
+
+function wordFromDigits(digits:number[]):string {
+
+  const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+  return digits.reduce((acc, num) => acc + alphabet[num], "")
+}
+
+/**
+ * Convert to 5 digit base 26
+ * @param input
+ */
+function convertBase(input:number):number[] {
+
+  let startingPower = 4
+
+  let digits:number[] = []
+
+  let curNum = input
+
+
+  for(let currentPower = startingPower; currentPower >=0; currentPower--) {
+    let currentDigit = Math.floor(curNum / Math.pow(26, currentPower))
+
+    curNum = curNum - currentDigit * Math.pow(26, currentPower)
+
+    digits.push(currentDigit)
+  }
+
+  return digits.reverse()
 }
 
 export const getSolution = (gameDate: Date) => {
