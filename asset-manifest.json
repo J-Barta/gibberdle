@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/gibberdle/static/css/main.d0d69840.css",
-    "main.js": "/gibberdle/static/js/main.053ccdf7.js",
+    "main.js": "/gibberdle/static/js/main.646bdb75.js",
     "static/js/496.3a2b595e.chunk.js": "/gibberdle/static/js/496.3a2b595e.chunk.js",
     "index.html": "/gibberdle/index.html",
     "main.d0d69840.css.map": "/gibberdle/static/css/main.d0d69840.css.map",
-    "main.053ccdf7.js.map": "/gibberdle/static/js/main.053ccdf7.js.map",
+    "main.646bdb75.js.map": "/gibberdle/static/js/main.646bdb75.js.map",
     "496.3a2b595e.chunk.js.map": "/gibberdle/static/js/496.3a2b595e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d0d69840.css",
-    "static/js/main.053ccdf7.js"
+    "static/js/main.646bdb75.js"
   ]
 }
